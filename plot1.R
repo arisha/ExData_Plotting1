@@ -1,5 +1,7 @@
 ##Supress warnings globally
 options(warn=-1)
+##use english locale
+Sys.setlocale("LC_TIME", "English")
 
 ##For speed fread is used, install data.table package if not intalled
 if (!require("data.table")){
@@ -23,11 +25,10 @@ powerData$Date<- as.Date(powerData$Date, format="%d/%m/%Y")
 ##subset data choosing only dates 2007-02-01 and 2007-02-02
 powerDataRange<- subset(powerData, Date =="2007-02-01" | Date=="2007-02-02")
 
+##create a png device
+png(filename = "plot1.png", width = 480, height = 480, units = "px")
 ##Draw a histogram using the subset data, color the columns red, put title and x axis label
 hist(as.numeric(powerDataRange$Global_active_power),col = "Red",xlab = "Global Active Power (kilowatts)", main="Global Active Power")
-
-##Open a png device and copy the histogram to plot1.png. Not adjusting width and heigth, since the default is 480px for both witdth and heigth
-dev.copy(png, file="plot1.png")
 
 ##close the device
 dev.off()

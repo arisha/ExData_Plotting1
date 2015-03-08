@@ -1,5 +1,7 @@
 ##Supress warnings globally
 options(warn=-1)
+##use english locale
+Sys.setlocale("LC_TIME", "English")
 
 ##For speed fread is used, install data.table package if not intalled
 if (!require("data.table")){
@@ -26,11 +28,10 @@ powerDataRange<- subset(powerData, Date =="2007-02-01" | Date=="2007-02-02")
 ##combine date and time into a new timestamp column
 powerDataRange$timestamp<- as.POSIXct(paste(powerDataRange$Date, powerDataRange$Time))
 
+##create a png device
+png(filename = "plot2.png", width = 480, height = 480, units = "px")
 ##Draw a plot using combined column timestamp and global active power
 plot(powerDataRange$Global_active_power~powerDataRange$timestamp, type="l", ylab = "Global Active Power (kwh)", xlab="", main="")
-
-##Open a png device and copy the histogram to plot2.png. Not adjusting width and heigth, since the default is 480px for both witdth and heigth
-dev.copy(png, file="plot2.png")
 
 ##close the device
 dev.off()
